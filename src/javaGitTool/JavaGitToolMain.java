@@ -55,34 +55,43 @@ public class JavaGitToolMain {
 		if(args != null && args.length > 1) {
 			if(functionType == FuntionType.GITPull && args.length >= 6) {
 				JavaGitTool.identitySshFileName		= args[1].trim();
-				JavaGitTool.identitySshFileName		= args[2].trim();
+				JavaGitTool.knownHostFileName		= args[2].trim();
 				repositoryLocalPath 				= args[3].trim();
 				repositoryRemotePath 				= args[4].trim();
 				repositoryRemoteName		 		= args[5].trim();
 		        JavaGitTool.gitSSHPull(repositoryLocalPath, repositoryRemotePath, repositoryRemoteName);
 			} else if(functionType == FuntionType.GITPush && args.length >= 6) {
 				JavaGitTool.identitySshFileName		= args[1].trim();
-				JavaGitTool.identitySshFileName		= args[2].trim();
+				JavaGitTool.knownHostFileName		= args[2].trim();
 				repositoryLocalPath 				= args[3].trim();
 				repositoryRemotePath 				= args[4].trim();
 				repositoryRemoteName		 		= args[5].trim();
 		        JavaGitTool.gitSSHPush(repositoryLocalPath, repositoryRemotePath, repositoryRemoteName);
-			} else if(functionType == FuntionType.GITCheckinPush && args.length >= 7) {
-				JavaGitTool.identitySshFileName		= args[1].trim();
-				JavaGitTool.identitySshFileName		= args[2].trim();
-				repositoryLocalPath 				= args[3].trim();
-				repositoryRemotePath 				= args[4].trim();
-				repositoryRemoteName		 		= args[5].trim();
-				if(args.length >= 7) {
-					gitCommitComment 	= args[6].trim();
+			} else if(functionType == FuntionType.GITCheckinPush && args.length >= 8) {
+				JavaGitTool.identitySshFileName	= args[1].trim();
+				JavaGitTool.knownHostFileName	= args[2].trim();
+				repositoryLocalPath 			= args[3].trim();
+				repositoryRemotePath 			= args[4].trim();
+				repositoryRemoteName		 	= args[5].trim();
+				JavaGitTool.gitAuthorName 		= args[6].trim();
+				JavaGitTool.gitCommitterName	= JavaGitTool.gitAuthorName;
+				JavaGitTool.gitAuthorEmail	 	= args[7].trim();
+				JavaGitTool.gitCommitterEmail	= JavaGitTool.gitAuthorEmail;
+				if(args.length >= 9) {
+					gitCommitComment 	= args[8].trim();
 				} else {
 					gitCommitComment = null;
 				}
+				JavaGitTool.gitCommit(repositoryLocalPath, gitCommitComment);
 		        JavaGitTool.gitSSHPush(repositoryLocalPath, repositoryRemotePath, repositoryRemoteName);
-			} else if(functionType == FuntionType.GITCheckin && args.length >= 2) {
-				repositoryDirPath 	= args[1].trim();
-				if(args.length >= 3) {
-					gitCommitComment 	= args[2].trim();
+			} else if(functionType == FuntionType.GITCheckin && args.length >= 5) {
+				repositoryDirPath 				= args[1].trim();
+				JavaGitTool.gitAuthorName 		= args[2].trim();
+				JavaGitTool.gitCommitterName	= JavaGitTool.gitAuthorName;
+				JavaGitTool.gitAuthorEmail	 	= args[3].trim();
+				JavaGitTool.gitCommitterEmail	= JavaGitTool.gitAuthorEmail;
+				if(args.length >= 5) {
+					gitCommitComment 	= args[4].trim();
 				} else {
 					gitCommitComment = null;
 				}
@@ -91,7 +100,7 @@ public class JavaGitToolMain {
 				repositoryDirPath 	= args[1].trim();
 				gitCommitIdStr		= args[1].trim();
 				JavaGitTool.gitRetrieveCommit(repositoryLocalPath, gitCommitIdStr);
-			} else if(functionType == FuntionType.GITCleanDir && args.length >= 3) {
+			} else if(functionType == FuntionType.GITCleanDir && args.length >= 2) {
 				repositoryDirPath 	= args[1].trim();
 		        JavaGitTool.cleanGitDirFiles(repositoryDirPath);
 			} else {
@@ -99,6 +108,7 @@ public class JavaGitToolMain {
 			}
 		} else {
 			System.out.println("There are not parameters ");
+			
 		}
 		
 		
